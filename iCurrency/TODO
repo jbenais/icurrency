@@ -1,8 +1,13 @@
 TO DO
 
--- Date picker
--- Currency picker
--- Request for currencies array
--- Request for change rates
--- Amount
+-- Date picker [OK]
+-- Currency picker [OK]
+-- Request for currencies array [OK]
+-- Request for change rates [OK] 
+-- Amount [OK]
+
+
+-- Error handling [KO]
+-- Design [KO]
+-- Alamofire request for currencies list [KO]
 
