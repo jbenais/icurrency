@@ -17,6 +17,10 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBOutlet weak var toText: UITextField!
     
+    @IBAction func targetAction(_ sender: Any)
+    {
+        
+    }
     @IBOutlet weak var amount: UITextField!
     
     @IBOutlet weak var date: UITextField!
@@ -39,7 +43,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                 {
                     let rate = json as! NSDictionary
                     let cur = rate["rates"] as! NSDictionary
-                    let value = cur.allValues[0] as! Double + Double(self.amount.text!)!
+                    let value = cur.allValues[0] as! Double * Double(self.amount.text!)!
                     self.resultLabel.text = String(value)
                 }
                 
@@ -51,7 +55,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     let fromPickerView = UIPickerView()
     let toPickerView = UIPickerView()
-    var currencies:[String] = ["EUR", "USD", "DRH", "LIV", "GBP"]
+    var currencies:[String] = []
     var values:[Double] = []
     var activeCurrency : Double = 0
     let datePicker = UIDatePicker()
@@ -89,6 +93,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     {
        
         super.viewDidLoad()
+        loadCurrencies()
         datePicker.datePickerMode = UIDatePickerMode.date
         datePicker.addTarget(self, action: #selector(ViewController.datePickerValueChanged(sender:)), for: UIControlEvents.valueChanged)
         date.inputView = datePicker
@@ -103,6 +108,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         alertAmount.isHidden = true
     }
     
+    func loadCurrencies()
+    {
+        Alamofire.request("http://api.fixer.io/latest").responseJSON(completionHandler: {
+            response in
+            if let values = response.result.value
+            {
+                let json = values as! NSDictionary
+                let curr = json["rates"] as! NSDictionary
+                for (key, _) in curr
+                {
+                    self.currencies.append(key as! String)
+                }
+            }
+        })
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
