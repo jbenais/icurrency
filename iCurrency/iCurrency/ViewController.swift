@@ -33,7 +33,27 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         datePickerView.minimumDate = minDate
         
     }
-    
+    var tmp : Int = 0
+    @IBAction func swapButton(_ sender: Any)
+    {
+        if (toText.text != "" && fromText.text != "")
+        {
+            if (tmp & 1 == 0)
+            {
+                let swap = toText.text
+                toText.text = fromText.text
+                fromText.text = swap
+                tmp = tmp & 1
+            }
+            else
+            {
+                let swap = fromText.text
+                fromText.text = toText.text
+                toText.text = swap
+                tmp = tmp & 1
+            }
+        }
+    }
     @IBOutlet weak var amount: UITextField!
     
     @IBOutlet weak var date: UITextField!
