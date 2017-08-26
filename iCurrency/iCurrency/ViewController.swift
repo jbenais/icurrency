@@ -33,7 +33,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         datePickerView.minimumDate = minDate
         
     }
-    var tmp : Int = 0
     @IBAction func swapButton(_ sender: Any)
     {
         if (toText.text != "" && fromText.text != "")
@@ -61,6 +60,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var resultLabel: UILabel!
     
     @IBOutlet weak var wrongCurrencies: UILabel!
+    
     @IBAction func convertButton(_ sender: Any)
     {
         if !currencies.contains(toText.text!) || !currencies.contains(fromText.text!)
@@ -115,6 +115,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             }
         }
     }
+    
     @IBOutlet weak var alertAmount: UILabel!
     
     let fromPickerView = UIPickerView()
@@ -123,6 +124,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var values:[Double] = []
     var activeCurrency : Double = 0
     let datePickerView: UIDatePicker = UIDatePicker()
+    var tmp : Int = 0
 
     func errorNotFound()
     {
@@ -182,7 +184,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         fromPickerView.dataSource = self
         toPickerView.delegate = self
         toPickerView.dataSource = self
-        
         fromText.inputView = fromPickerView
         toText.inputView = toPickerView
         fromPickerView.tag = 1
