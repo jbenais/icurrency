@@ -1,1 +1,13 @@
-README
+Name: Julia Benais
+Project: Currency Convertor App
+Target Company: BidMotion
+Github project name: iCurrency
+Language: Swift 3
+Framework: XCode 8
+Timeframe: 24 hours
+API: Alamofire (requests), fixer.io (Currency rates)
+Bonus: LaunchScreen, logo creation, design
+
+Problems encountered:
+    -- XCode bugs (the Simulator in particular for example for the DatePicker item)
+    -- Layout Constraints
