@@ -108,10 +108,16 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                     }
                     else
                     {
+                        
                         self.sendAlert()
                     }
                 }
             }
+        }
+        else
+        {
+            alertAmount.text = "Please insert a valid data"
+            self.alertAmount.isHidden = false
         }
     }
     
