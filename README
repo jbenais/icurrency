@@ -6,8 +6,16 @@ Language: Swift 3
 Framework: XCode 8
 Timeframe: 24 hours
 API: Alamofire (requests), fixer.io (Currency rates)
+Dependancies: Alamofire
 Bonus: LaunchScreen, logo creation, design
+
+If an error occured before the launch, go check the Alamofire documentation. Install it, select iCurrency project in the Project Navigator (blue project icon) to navigate to the target configuration window and In the tab bar at the top of that window, open the "General" panel. Click on the + button under the "Embedded Binaries" section. You will see two different Alamofire.xcodeproj folders each with two different versions of the Alamofire.framework nested inside a Products folder. Select the top Alamofire.framework for iOS and the bottom one for OS X. And that's it!
+
 
 Problems encountered:
     -- XCode bugs (the Simulator in particular for example for the DatePicker item)
     -- Layout Constraints
+
+Why fixer.io API ? Easy, fast and FREE.
+
+
