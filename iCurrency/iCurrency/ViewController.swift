@@ -83,7 +83,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
             else
             {
-                datePickerView.isHidden = true
                 alertAmount.isHidden = true
                 wrongCurrencies.isHidden = true
                 let request = "http://api.fixer.io/latest?base=\(fromText.text! as String)&symbols=\(toText.text! as String)&date=\(date.text! as String)"
