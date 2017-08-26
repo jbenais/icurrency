@@ -75,15 +75,21 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         {
                             let rate = json as! NSDictionary
                             let cur = rate["rates"] as! NSDictionary
-                            let value = cur.allValues[0] as! Double * Double(self.amount.text!)!
-                            self.resultLabel.text = String(value)
+                            if (cur.count == 0)
+                            {
+                                self.errorNotFound()
+                            }
+                            else
+                            {
+                                let value = cur.allValues[0] as! Double * Double(self.amount.text!)!
+                                self.resultLabel.text = String(value)
+                            }
+                            
                         }
                     }
                     else
                     {
-                        let alert = UIAlertController(title: "Oops! An error occured", message: " It appears that some fields are missing or invalid", preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+                        self.sendAlert()
                     }
                 }
             }
@@ -98,9 +104,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var activeCurrency : Double = 0
     let datePickerView: UIDatePicker = UIDatePicker()
 
+    func errorNotFound()
+    {
+        let alert = UIAlertController(title: "Oops! An error occured", message: "This information is not available in our database", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+
+    }
     
-    
-    
+    func sendAlert()
+    {
+        let alert = UIAlertController(title: "Oops! An error occured", message: " It appears that some fields are missing or invalid", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -183,6 +200,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         format.dateStyle = DateFormatter.Style.full
         format.dateFormat = "yyyy-MM-dd"
         date.text = format.string(from: sender.date)
+
     }
     
 
