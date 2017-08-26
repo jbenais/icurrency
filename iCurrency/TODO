@@ -6,10 +6,10 @@ TO DO
 -- Request for change rates [OK] 
 -- Amount [OK]
 -- Alamofire request for currencies list [OK]
+-- Error handling [OK]
+-- Bug with Datepicker [OK]
+-- Design [OK]
 
 
--- Error handling [KO]
--- Design [KO]
--- Bug with Datepicker [KO]
 -- Constraints [KO]
 

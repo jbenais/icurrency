@@ -17,10 +17,23 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     @IBOutlet weak var toText: UITextField!
     
-    @IBAction func targetAction(_ sender: Any)
+    @IBAction func dateChanged(_ sender: UITextField)
     {
+        let datePickerView:UIDatePicker = UIDatePicker()
+        sender.inputView = datePickerView
+        
+        datePickerView.addTarget(self, action: #selector(ViewController.datePickerValueChanged), for:UIControlEvents.valueChanged)
+        
+        datePickerView.datePickerMode = UIDatePickerMode.date
+        
+        datePickerView.maximumDate = NSDate() as Date
+        var components = DateComponents()
+        components.year = -17
+        let minDate = Calendar.current.date(byAdding: components, to: Date())
+        datePickerView.minimumDate = minDate
         
     }
+    
     @IBOutlet weak var amount: UITextField!
     
     @IBOutlet weak var date: UITextField!
@@ -50,7 +63,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
             else
             {
-                datePicker.isHidden = true
+                datePickerView.isHidden = true
                 alertAmount.isHidden = true
                 wrongCurrencies.isHidden = true
                 let request = "http://api.fixer.io/latest?base=\(fromText.text! as String)&symbols=\(toText.text! as String)&date=\(date.text! as String)"
@@ -71,8 +84,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
                         let alert = UIAlertController(title: "Oops! An error occured", message: " It appears that some fields are missing or invalid", preferredStyle: UIAlertControllerStyle.alert)
                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                         self.present(alert, animated: true, completion: nil)
-                        self.datePicker.reloadInputViews()
-
                     }
                 }
             }
@@ -85,8 +96,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var currencies:[String] = []
     var values:[Double] = []
     var activeCurrency : Double = 0
-    let datePicker = UIDatePicker()
-    
+    let datePickerView: UIDatePicker = UIDatePicker()
+
     
     
     
@@ -118,21 +129,23 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     override func viewDidLoad()
     {
-       
         super.viewDidLoad()
         loadCurrencies()
-        datePicker.datePickerMode = UIDatePickerMode.date
-        datePicker.maximumDate = NSDate() as Date
+        datePickerView.datePickerMode = UIDatePickerMode.date
+        
+        datePickerView.maximumDate = NSDate() as Date
         var components = DateComponents()
         components.year = -17
         let minDate = Calendar.current.date(byAdding: components, to: Date())
-        datePicker.minimumDate = minDate
-        datePicker.addTarget(self, action: #selector(ViewController.datePickerValueChanged(sender:)), for: UIControlEvents.valueChanged)
-        date.inputView = datePicker
+        datePickerView.minimumDate = minDate
+        
+        datePickerView.addTarget(self, action: #selector(ViewController.datePickerValueChanged), for: UIControlEvents.valueChanged)
+        date.inputView = datePickerView
         fromPickerView.delegate = self
         fromPickerView.dataSource = self
         toPickerView.delegate = self
         toPickerView.dataSource = self
+        
         fromText.inputView = fromPickerView
         toText.inputView = toPickerView
         fromPickerView.tag = 1
@@ -142,7 +155,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     override func viewWillAppear(_ animated: Bool)
     {
-        self.datePicker.reloadInputViews()
     }
     
     func loadCurrencies()
@@ -165,15 +177,6 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         // Dispose of any resources that can be recreated.
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
-    {
-        self.view.endEditing(true)
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(false)
-    }
-    
     func datePickerValueChanged(sender: UIDatePicker)
     {
         let format = DateFormatter()
@@ -181,6 +184,13 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         format.dateFormat = "yyyy-MM-dd"
         date.text = format.string(from: sender.date)
     }
+    
 
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(false)
+    }
+    
+    
 }
 
