@@ -208,6 +208,8 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             {
                 let json = values as! NSDictionary
                 let curr = json["rates"] as! NSDictionary
+                let base = json["base"] as! String
+                self.currencies.append(base)
                 for (key, _) in curr
                 {
                     self.currencies.append(key as! String)
