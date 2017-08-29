@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iCurrency/ViewController.swift"
-            timestampString = "525536133.024507"
+            timestampString = "525648165.963095"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "177"
-            endingLineNumber = "177"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>

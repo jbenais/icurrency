@@ -139,12 +139,20 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     }
     
+    func errorConnection()
+    {
+        let alert = UIAlertController(title: "Oops! An error occured", message: "Please check your Internet connection", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func sendAlert()
     {
         let alert = UIAlertController(title: "Oops! An error occured", message: " It appears that some fields are missing or invalid", preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
         self.present(alert, animated: true, completion: nil)
     }
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -157,6 +165,7 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return currencies[row]
     }
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
     {
         if (pickerView.tag == 1)
@@ -204,16 +213,24 @@ class ViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     {
         Alamofire.request("http://api.fixer.io/latest").responseJSON(completionHandler: {
             response in
-            if let values = response.result.value
+            let rescode = response.response?.statusCode
+            if (rescode == 200)
             {
-                let json = values as! NSDictionary
-                let curr = json["rates"] as! NSDictionary
-                let base = json["base"] as! String
-                self.currencies.append(base)
-                for (key, _) in curr
+                if let values = response.result.value
                 {
-                    self.currencies.append(key as! String)
+                    let json = values as! NSDictionary
+                    let curr = json["rates"] as! NSDictionary
+                    let base = json["base"] as! String
+                    self.currencies.append(base)
+                    for (key, _) in curr
+                    {
+                        self.currencies.append(key as! String)
+                    }
                 }
+            }
+            else
+            {
+                self.errorConnection()
             }
         })
     }
